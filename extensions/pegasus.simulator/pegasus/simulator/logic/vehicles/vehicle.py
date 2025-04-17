@@ -460,6 +460,6 @@ class Vehicle(Robot):
             # print(graph.camera.get_current_frame())
             print(graph.camera.get_rgba()[:, :, :3])
             imgplot = plt.imshow(graph.camera.get_rgba()[:, :, :3])
-            plt.show()
             plt.savefig("/home/air/Pictures/image.png")  # Luôn save được
+            plt.show()
         pass
