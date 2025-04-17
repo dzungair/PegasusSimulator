@@ -84,17 +84,41 @@ class ROS2CameraGraph(Graph):
 
         # Create the camera object attached to the vehicle
         vehicle_pos, vehicle_orientation = vehicle.get_vehicle_pos
+        # Chuyển sang định dạng (x, y, z, w) cho scipy
+        #  [qx, qy, qz, qw]
+        q_current_xyzw = [
+            vehicle_orientation[0],
+            vehicle_orientation[1],
+            vehicle_orientation[2],
+            vehicle_orientation[3],
+        ]
+        # --- Bước 2: Tạo quaternion quay 45° quanh trục Y (pitch) ---
+        angle_rad = np.deg2rad(-30)
+        q_pitch = Rotation.from_euler(
+            "x", angle_rad
+        )  # chỉ xoay quanh trục Y (# chuyển x hoặc y)
+
+        # --- Bước 3: Nhân quaternion mới với quaternion gốc ---
+        r_current = Rotation.from_quat(q_current_xyzw)
+        r_result = q_pitch * r_current  # nhân theo thứ tự: phép quay mới trước
+
+        # --- Bước 4: Lấy quaternion kết quả ---
+        q_result_xyzw = r_result.as_quat()  # (x, y, z, w)
+
+        # Chuyển lại về (w, x, y, z) nếu cần
+        orientation_cov = [
+            q_result_xyzw[3],
+            q_result_xyzw[0],
+            q_result_xyzw[1],
+            q_result_xyzw[2],
+        ]
+
         self.camera = Camera(
             prim_path=self._camera_prim_path,
-            position=np.array([0.30, 0.0, 0.0]) + vehicle_pos,
+            position=np.array([0.0, 0.10, 0.0]) + vehicle_pos,  # chuyển x hoặc y
             frequency=30.0,
             resolution=self._resolution,
-            orientation=[
-                vehicle_orientation[3],
-                vehicle_orientation[0],
-                vehicle_orientation[1],
-                vehicle_orientation[2],
-            ],
+            orientation=orientation_cov,
         )
 
         # Initialize the camera sensor

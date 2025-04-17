@@ -338,7 +338,7 @@ class NonlinearController(Backend):
         # ----------------------------
         # Save the image at the last index
         # ----------------------------
-        if self.index == (self.max_index - 2):  # gần cuối (trước lúc tắt máy)
+        if self.index == (self.max_index - 3):  # gần cuối (trước lúc tắt máy)
             if not self.is_capture:
                 print("save image")
                 self.is_capture = True
