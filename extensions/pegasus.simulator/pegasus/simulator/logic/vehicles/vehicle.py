@@ -27,6 +27,7 @@ from pegasus.simulator.logic.vehicle_manager import VehicleManager
 
 #
 import matplotlib.pyplot as plt
+import cv2
 
 
 def get_world_transform_xform(prim: Usd.Prim):
@@ -454,12 +455,16 @@ class Vehicle(Robot):
 
         return self._vehicle_dc_interface
 
-    def capture_image(self):
+    def capture_image(self, img_index):
         for graph in self._graphs:
-            # graph.camera.get_rgba()[:, :, :3]
-            # print(graph.camera.get_current_frame())
-            print(graph.camera.get_rgba()[:, :, :3])
-            imgplot = plt.imshow(graph.camera.get_rgba()[:, :, :3])
-            plt.savefig("/home/air/Pictures/image.png")  # Luôn save được
-            plt.show()
+            rgb_image = graph.camera.get_rgba()[:, :, :3]
+            bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
+            # imgplot = plt.imshow(graph.camera.get_rgba()[:, :, :3])
+            # camera_prim_path
+            # plt.savefig("/home/air/Pictures/" + str(img_index) + ".png")
+            cv2.imwrite(
+                "/home/air/Pictures/" + str(img_index) + ".png",
+                bgr_image,
+            )
+            # plt.show()
         pass

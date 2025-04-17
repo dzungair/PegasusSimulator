@@ -103,7 +103,9 @@ class NonlinearController(Backend):
         self.velocity_error_over_time = []
         self.atittude_error_over_time = []
         self.attitude_rate_error_over_time = []
-        self.cam_cnt = 0
+        self.is_capture = False
+        self.is_turn_off_motors = False
+        self.image_cnt = 0
 
     def read_trajectory_from_csv(self, file_name: str):
         """Auxiliar method used to read the desired trajectory from a CSV file
@@ -321,17 +323,27 @@ class NonlinearController(Backend):
         if self.vehicle and self.index != (self.max_index - 1):
             self.input_ref = self.vehicle.force_and_torques_to_velocities(u_1, tau)
         elif self.index == (self.max_index - 1):
-            print("turn off motors")
             self.zero_input_reference()
+            # Result of landing
+            if not self.is_turn_off_motors:
+                print("turn off motors")
+                self.is_turn_off_motors = True
+                with open(
+                    "/home/air/Pictures/" + str(self.image_cnt) + ".txt", "w"
+                ) as file:
+                    # if() drone's height < landing area
+                    result = True
+                    file.write(str(result))
 
         # ----------------------------
         # Save the image at the last index
         # ----------------------------
         if self.index == (self.max_index - 2):  # gần cuối (trước lúc tắt máy)
-            self.cam_cnt += 1
-            if self.cam_cnt == 1:
+            if not self.is_capture:
                 print("save image")
-                self.vehicle.capture_image()
+                self.is_capture = True
+                self.image_cnt += 1
+                self.vehicle.capture_image(self.image_cnt)
         # ----------------------------
         # Statistics to save for later
         # ----------------------------
@@ -370,7 +382,8 @@ class NonlinearController(Backend):
         self.velocity_error_over_time = []
         self.atittude_error_over_time = []
         self.attitude_rate_error_over_time = []
-        self.cam_cnt = 0
+        self.is_capture = False
+        self.is_turn_off_motors = False
 
     # ---------------------------------------------------
     # Definition of an exponential trajectory for example
