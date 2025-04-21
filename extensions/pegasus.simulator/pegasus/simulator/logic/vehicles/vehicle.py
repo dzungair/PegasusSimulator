@@ -457,14 +457,17 @@ class Vehicle(Robot):
 
     def capture_image(self, img_index):
         for graph in self._graphs:
+            # --- RGB ---
             rgb_image = graph.camera.get_rgba()[:, :, :3]
             bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
-            # imgplot = plt.imshow(graph.camera.get_rgba()[:, :, :3])
-            # camera_prim_path
-            # plt.savefig("/home/air/Pictures/" + str(img_index) + ".png")
-            cv2.imwrite(
-                "/home/air/Pictures/" + str(img_index) + ".png",
-                bgr_image,
-            )
-            # plt.show()
+            cv2.imwrite(f"/home/air/Pictures/rgb_{img_index}.png", bgr_image)
+
+            # --- DEPTH ---
+            # graph.camera.add_distance_to_camera_to_frame()
+            depth_image = graph.camera.get_current_frame()["distance_to_camera"]
+            print(depth_image)
+            # Chuyển depth sang ảnh 8-bit để hiển thị hoặc lưu file
+            depth_normalized = cv2.normalize(depth_image, None, 0, 255, cv2.NORM_MINMAX)
+            depth_uint8 = depth_normalized.astype(np.uint8)
+            cv2.imwrite(f"/home/air/Pictures/depth_{img_index}.png", depth_uint8)
         pass

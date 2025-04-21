@@ -123,6 +123,7 @@ class ROS2CameraGraph(Graph):
 
         # Initialize the camera sensor
         self.camera.initialize()
+        self.camera.add_distance_to_camera_to_frame()
 
         # Create camera prism
         if not is_prim_path_valid(self._camera_prim_path):

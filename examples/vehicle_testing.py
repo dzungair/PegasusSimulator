@@ -83,6 +83,7 @@ class PegasusApp:
         # Launch one of the worlds provided by NVIDIA
         self.pg.load_environment(
             "/home/air/Downloads/isaac-sim-assets-1@4.2.0-rc.18+release.16044.3b2ed111/Assets/Isaac/4.2/Isaac/Environments/Simple_Warehouse/full_warehouse.usd"
+            # "/home/air/Downloads/isaac-sim-assets-1@4.2.0-rc.18+release.16044.3b2ed111/Assets/Isaac/4.2/Isaac/Environments/Grid/default_environment.usd"
         )
 
         # Thêm object từ USD
