@@ -465,7 +465,7 @@ class Vehicle(Robot):
             # --- DEPTH ---
             # graph.camera.add_distance_to_camera_to_frame()
             depth_image = graph.camera.get_current_frame()["distance_to_camera"]
-            print(depth_image)
+            # print(depth_image)
             # Chuyển depth sang ảnh 8-bit để hiển thị hoặc lưu file
             depth_normalized = cv2.normalize(depth_image, None, 0, 255, cv2.NORM_MINMAX)
             depth_uint8 = depth_normalized.astype(np.uint8)

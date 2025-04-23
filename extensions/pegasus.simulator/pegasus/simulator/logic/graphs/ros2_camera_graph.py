@@ -56,6 +56,7 @@ class ROS2CameraGraph(Graph):
         # Process the config dictionary
         self._graph_evaluator = config.get("graph_evaluator", "execution")
         self._resolution = config.get("resolution", [640, 480])
+        # self._resolution = config.get("resolution", [1080, 1920])
         self._types = np.array(config.get("types", ["rgb", "camera_info"]))
         self._publish_labels = config.get("publish_labels", True)
 
@@ -116,7 +117,8 @@ class ROS2CameraGraph(Graph):
         self.camera = Camera(
             prim_path=self._camera_prim_path,
             position=np.array([0.0, 0.10, 0.0]) + vehicle_pos,  # chuyển x hoặc y
-            frequency=30.0,
+            # frequency=30.0,
+            frequency=5.0,
             resolution=self._resolution,
             orientation=orientation_cov,
         )
