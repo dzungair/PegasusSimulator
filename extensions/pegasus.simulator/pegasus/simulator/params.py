@@ -76,18 +76,18 @@ BACKENDS = {"px4": "px4", "ardupilot": "ardupilot", "ros2": "ros2"}
 
 # Define the default settings for the simulation environment
 WORLD_SETTINGS = {
-    # "px4": {
-    #     "physics_dt": 1.0 / 250.0,
-    #     "stage_units_in_meters": 1.0,
-    #     "rendering_dt": 1.0 / 5.0,
-    #     "device": "cpu",
-    # },
     "px4": {
         "physics_dt": 1.0 / 250.0,
         "stage_units_in_meters": 1.0,
-        "rendering_dt": 1.0 / 60.0,
+        "rendering_dt": 1.0 / 5.0,
         "device": "cpu",
     },
+    # "px4": {
+    #     "physics_dt": 1.0 / 250.0,
+    #     "stage_units_in_meters": 1.0,
+    #     "rendering_dt": 1.0 / 60.0,
+    #     "device": "cpu",
+    # },
     "ardupilot": {
         "physics_dt": 1.0 / 800.0,  # Reach communication of 250hz with ardupilot sitl
         "stage_units_in_meters": 1.0,

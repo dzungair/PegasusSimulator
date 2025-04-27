@@ -338,10 +338,6 @@ class NonlinearController(Backend):
                     result = True
                     file.write(str(result))
                     self.timeline.stop()
-                    # Reset mô phỏng về frame 0
-                    self.timeline.set_current_time(0.0)
-                    # Start mô phỏng
-                    self.timeline.play()
 
         # ----------------------------
         # Save the image at the last index

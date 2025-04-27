@@ -14,7 +14,7 @@ from isaacsim import SimulationApp
 # Start Isaac Sim's simulation environment
 # Note: this simulation app must be instantiated right after the SimulationApp import, otherwise the simulator will crash
 # as this is the object that will load all the extensions and load the actual simulator.
-simulation_app = SimulationApp({"headless": False})
+simulation_app = SimulationApp({"headless": True})
 
 # -----------------------------------
 # The actual script should start here
@@ -71,6 +71,8 @@ class PegasusApp:
 
         # Acquire the timeline that will be used to start/stop the simulation
         self.timeline = omni.timeline.get_timeline_interface()
+        self.max_loop_cnt = 5
+        self.loop_cnt = 0
 
         # Start the Pegasus Interface
         self.pg = PegasusInterface()
@@ -248,6 +250,12 @@ class PegasusApp:
         """
         Method that implements the application main loop, where the physics steps are executed.
         """
+        self.loop_cnt += 1
+        if self.loop_cnt == self.max_loop_cnt + 1:
+            # Cleanup and stop
+            carb.log_warn("PegasusApp Simulation App is closing.")
+            self.timeline.stop()
+            simulation_app.close()
 
         # Start the simulation
         self.timeline.play()
@@ -257,11 +265,8 @@ class PegasusApp:
 
             # Update the UI of the app and perform the physics step
             self.world.step(render=True)
-
-        # Cleanup and stop
-        carb.log_warn("PegasusApp Simulation App is closing.")
-        self.timeline.stop()
-        simulation_app.close()
+            if not self.timeline.is_playing():
+                self.run()
 
 
 def main():

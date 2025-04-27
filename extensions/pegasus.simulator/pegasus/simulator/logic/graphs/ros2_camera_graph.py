@@ -117,8 +117,8 @@ class ROS2CameraGraph(Graph):
         self.camera = Camera(
             prim_path=self._camera_prim_path,
             position=np.array([0.0, 0.10, 0.0]) + vehicle_pos,  # chuyển x hoặc y
-            frequency=30.0,
-            # frequency=5.0,
+            # frequency=30.0,
+            frequency=5.0,
             resolution=self._resolution,
             orientation=orientation_cov,
         )
