@@ -12,6 +12,7 @@ can be achieved
 
 # Imports to be able to log to the terminal with fancy colors
 import carb
+import omni
 
 # Imports from the Pegasus library
 from pegasus.simulator.logic.state import State
@@ -106,6 +107,8 @@ class NonlinearController(Backend):
         self.is_capture = False
         self.is_turn_off_motors = False
         self.image_cnt = 0
+
+        self.timeline = omni.timeline.get_timeline_interface()
 
     def read_trajectory_from_csv(self, file_name: str):
         """Auxiliar method used to read the desired trajectory from a CSV file
@@ -334,6 +337,11 @@ class NonlinearController(Backend):
                     # if() drone's height < landing area
                     result = True
                     file.write(str(result))
+                    self.timeline.stop()
+                    # Reset mô phỏng về frame 0
+                    self.timeline.set_current_time(0.0)
+                    # Start mô phỏng
+                    self.timeline.play()
 
         # ----------------------------
         # Save the image at the last index
