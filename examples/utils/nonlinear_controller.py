@@ -13,6 +13,7 @@ can be achieved
 # Imports to be able to log to the terminal with fancy colors
 import carb
 import omni
+import time
 
 # Imports from the Pegasus library
 from pegasus.simulator.logic.state import State
@@ -336,8 +337,12 @@ class NonlinearController(Backend):
                 ) as file:
                     # if() drone's height < landing area
                     result = True
+                    start = time.perf_counter()
                     file.write(str(result))
                     self.timeline.stop()
+                    end = time.perf_counter()
+                    elapsed_ms = (end - start) * 1000  # Chuyển giây sang mili giây
+                    print(f"[write text] Thời gian chạy: {elapsed_ms:.3f} ms")
 
         # ----------------------------
         # Save the image at the last index

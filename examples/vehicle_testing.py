@@ -10,6 +10,7 @@ for the vehicle from scratch and use it to perform a simulation, without using P
 # Imports to start Isaac Sim from this script
 import carb
 from isaacsim import SimulationApp
+import time
 
 # Start Isaac Sim's simulation environment
 # Note: this simulation app must be instantiated right after the SimulationApp import, otherwise the simulator will crash
@@ -71,7 +72,7 @@ class PegasusApp:
 
         # Acquire the timeline that will be used to start/stop the simulation
         self.timeline = omni.timeline.get_timeline_interface()
-        self.max_loop_cnt = 5
+        self.max_loop_cnt = 1000
         self.loop_cnt = 0
 
         # Start the Pegasus Interface
@@ -250,6 +251,8 @@ class PegasusApp:
         """
         Method that implements the application main loop, where the physics steps are executed.
         """
+        start = time.perf_counter()
+        print(f"---------------------------------------------")
         self.loop_cnt += 1
         if self.loop_cnt == self.max_loop_cnt + 1:
             # Cleanup and stop
@@ -266,6 +269,9 @@ class PegasusApp:
             # Update the UI of the app and perform the physics step
             self.world.step(render=True)
             if not self.timeline.is_playing():
+                end = time.perf_counter()
+                elapsed_ms = (end - start) * 1000  # Chuyển giây sang mili giây
+                print(f"[all] Thời gian chạy: {elapsed_ms:.3f} ms")
                 self.run()
 
 

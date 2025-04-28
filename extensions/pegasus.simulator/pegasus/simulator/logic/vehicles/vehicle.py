@@ -12,6 +12,7 @@ from scipy.spatial.transform import Rotation
 # Low level APIs
 import carb
 from pxr import Usd, Gf
+import time
 
 # High level Isaac sim APIs
 import omni.usd
@@ -459,15 +460,24 @@ class Vehicle(Robot):
         for graph in self._graphs:
             # --- RGB ---
             rgb_image = graph.camera.get_rgba()[:, :, :3]
+            start = time.perf_counter()
             bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
             cv2.imwrite(f"/home/air/Pictures/rgb_{img_index}.png", bgr_image)
+            end = time.perf_counter()
+            elapsed_ms = (end - start) * 1000  # Chuyển giây sang mili giây
+            print(f"[rgb] Thời gian chạy: {elapsed_ms:.3f} ms")
 
             # --- DEPTH ---
             # graph.camera.add_distance_to_camera_to_frame()
             depth_image = graph.camera.get_current_frame()["distance_to_camera"]
             # print(depth_image)
+            start = time.perf_counter()
+
             # Chuyển depth sang ảnh 8-bit để hiển thị hoặc lưu file
             depth_normalized = cv2.normalize(depth_image, None, 0, 255, cv2.NORM_MINMAX)
             depth_uint8 = depth_normalized.astype(np.uint8)
             cv2.imwrite(f"/home/air/Pictures/depth_{img_index}.png", depth_uint8)
+            end = time.perf_counter()
+            elapsed_ms = (end - start) * 1000  # Chuyển giây sang mili giây
+            print(f"[depth] Thời gian chạy: {elapsed_ms:.3f} ms")
         pass
