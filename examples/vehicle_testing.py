@@ -16,6 +16,7 @@ import time
 # Note: this simulation app must be instantiated right after the SimulationApp import, otherwise the simulator will crash
 # as this is the object that will load all the extensions and load the actual simulator.
 simulation_app = SimulationApp({"headless": True})
+# simulation_app = SimulationApp({"headless": False})
 
 # -----------------------------------
 # The actual script should start here
@@ -105,6 +106,13 @@ class PegasusApp:
                 "position": [-3.0, 18.0, 0.01],
                 "mass": 2.0,
                 "trajectory_path": "/trajectories/testing_1.csv",
+            },
+            "Warehouse Pile Simple": {
+                "usd_path": "/home/air/Downloads/Industrial_NVD@10012/Assets/ArchVis/Industrial/Piles/WarehousePile_A1.usd",
+                "scale": [0.01, 0.01, 0.01],
+                "position": [-3.0, 18.0, 0.01],
+                "mass": 2.0,
+                "trajectory_path": "/trajectories/pile_simple.csv",
             },
             "Pallets Pile": {
                 "usd_path": "/home/air/Downloads/Industrial_NVD@10012/Assets/ArchVis/Industrial/Piles/Pallets_A1.usd",

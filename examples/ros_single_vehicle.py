@@ -21,6 +21,7 @@ simulation_app = SimulationApp({"headless": False})
 # -----------------------------------
 import omni.timeline
 from omni.isaac.core.world import World
+from omni.isaac.core.prims import RigidPrim
 
 # Import the Pegasus API for simulating drones
 from pegasus.simulator.params import ROBOTS, SIMULATION_ENVIRONMENTS
@@ -69,12 +70,14 @@ class PegasusApp:
             DynamicCuboid(
                 prim_path="/new_cube_2",
                 name="cube_1",
-                position=np.array([-3.0, 0, 2.0]),
-                scale=np.array([1.0, 1.0, 1.0]),
+                position=np.array([1.5, 5, 0]),
+                scale=np.array([3.0, 3.0, 6.0]),
                 size=1.0,
                 color=np.array([255, 0, 0]),
             )
         )
+        rigid_cube = RigidPrim(prim_path="/new_cube_2", name="cube_1")
+        rigid_cube.set_mass(100.0)
 
         # Create the vehicle
         # Try to spawn the selected robot in the world to the specified namespace
@@ -97,7 +100,7 @@ class PegasusApp:
                     "pub_sensors": True,
                     "pub_graphical_sensors": True,
                     "pub_state": True,
-                    "sub_control": True,
+                    "sub_control": False,
                 },
             ),
         ]
