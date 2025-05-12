@@ -31,7 +31,7 @@ ROBOTS_ASSETS = ASSET_PATH + "/Robots"
 # Define the built in robots of the extension
 ROBOTS = {
     "Iris": ROBOTS_ASSETS + "/Iris/iris.usd",
-    "Custom": ROBOTS_ASSETS + "/Custom Drone/uni250C_ver1.usd",
+    "Custom": ROBOTS_ASSETS + "/Custom Drone/uni350CL_ver1.usd",
     "Flying Cube": ROBOTS_ASSETS + "/Flying Cube/cube.usda",
 }  # , "Flying Cube": ROBOTS_ASSETS + "/iris_cube.usda"}
 

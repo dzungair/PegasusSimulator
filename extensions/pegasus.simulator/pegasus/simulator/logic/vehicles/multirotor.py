@@ -137,7 +137,7 @@ class Multirotor(Vehicle):
         for i in range(4):
 
             # Apply the force in Z on the rotor frame
-            self.apply_force([0.0, -forces_z[i], 0.0], body_part="/rotor" + str(i))
+            self.apply_force([0.0, 0.0, forces_z[i]], body_part="/rotor" + str(i))
 
             # Generate the rotating propeller visual effect
             self.handle_propeller_visual(i, forces_z[i], articulation)
