@@ -35,6 +35,8 @@ ROBOTS = {
     "Custom350": ROBOTS_ASSETS + "/Custom Drone/uni350CL_ver1.usd",
     "huy250": ROBOTS_ASSETS + "/Quad_Huy/250c2.usd",
     "Flying Cube": ROBOTS_ASSETS + "/Flying Cube/cube.usda",
+    "Standard Hex": ROBOTS_ASSETS + "/Standard_Hex/standard_hex.usd",
+    "PX4 Vtol": ROBOTS_ASSETS + "/PX4_vtol/PX4_vtol.usd",
 }  # , "Flying Cube": ROBOTS_ASSETS + "/iris_cube.usda"}
 
 # Setup the default simulation environments path

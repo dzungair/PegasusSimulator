@@ -5,3 +5,4 @@
 
 from .vehicle import Vehicle
 from .multirotor import Multirotor, MultirotorConfig
+from .tilted_hex import TiltedHex, HexConfig
